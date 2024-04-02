@@ -3,6 +3,7 @@ plugins {
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
     id "com.google.gms.google-services"
+
 }
 
 def localProperties = new Properties()
@@ -25,14 +26,19 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.example.login"
-    compileSdk flutter.compileSdkVersion
+    compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
+    lintOptions {
+        disable 'InvalidPackage'
+        disable "Instantiatable"
+        checkReleaseBuilds false
+        abortOnError false
+    }
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -46,8 +52,9 @@ android {
         applicationId "com.example.login"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
+        multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -64,8 +71,12 @@ android {
 flutter {
     source '../..'
 }
+
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.google.firebase:firebase-bom:32.6.0'
+    implementation "com.google.firebase:firebase-auth"
+    implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0'
+    implementation "com.google.firebase:firebase-perf"
 }
