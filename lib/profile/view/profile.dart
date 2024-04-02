@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Widget/btn.dart';
 import '../../../Widget/textfeild.dart';
 import '../../Home/view/home.dart';
-import '../../Splash/Controller/splashcontroller.dart';
+import '../../Splash/Controller/splash_controller.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({super.key});
+  Profile({super.key});
 
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final providerController =
@@ -110,8 +110,10 @@ class Profile extends StatelessWidget {
                             'email', providerController.email.text);
                         sharedPreferences.setString(
                             'password', providerController.password.text);
-
-                        Get.offAll(() => MyHomePage());
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MyHomePage()),
+                        );
                       }
                     },
                   ),

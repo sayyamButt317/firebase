@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task1/Home/view/home.dart';
 
@@ -15,7 +16,10 @@ class SplashProvider extends ChangeNotifier {
     final auth = FirebaseAuth.instance;
     final user = auth.currentUser;
     if (user != null) {
-      Get.offAll(() => const MyHomePage());
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => MyHomePage()),
+      // );
     }
   }
 

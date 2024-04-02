@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../../Widget/btn.dart';
 import '../../../Widget/textfeild.dart';
 import '../../Profile/view/profile.dart';
-import '../../Splash/Controller/splashcontroller.dart';
+import '../../Signup/view/signup.dart';
+import '../../Splash/Controller/splash_controller.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({
@@ -25,9 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
       context.read<SplashProvider>().loadData();
     });
   }
-
-  final RxBool isEditing = false.obs;
-
+late bool isEditing = false;
   final FocusNode nameFocusNode = FocusNode();
 
   final FocusNode emailFocusNode = FocusNode();
@@ -51,14 +49,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   actions: [
                     TextButton(
                       onPressed: () {
-                        Get.back();
+                        Navigator.pop(context);
                       },
                       child: const Text('No'),
                     ),
                     TextButton(
                       onPressed: () async {
                         providerController.deleteData();
-                        Get.offAll(() => Signup());
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Signup()),
+                        );
+
                       },
                       child: const Text('Logout'),
                     ),
@@ -83,9 +85,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         controller: providerController.name,
                         prefixIcon: Icons.alternate_email,
                         hintText: 'Enter Your Name',
-                        readOnly: !isEditing.value,
-                        enabled: isEditing.value,
-                        textColor: isEditing.value ? Colors.black : Colors.grey,
+                        readOnly: !isEditing,
+                        enabled: isEditing,
+                        textColor: isEditing? Colors.black : Colors.grey,
                       ))),
               const SizedBox(height: 15),
               Consumer(
@@ -94,9 +96,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         controller: providerController.email,
                         prefixIcon: Icons.alternate_email,
                         hintText: 'Enter Your Email',
-                        readOnly: !isEditing.value,
-                        enabled: isEditing.value,
-                        textColor: isEditing.value ? Colors.black : Colors.grey,
+                        readOnly: !isEditing,
+                        enabled: isEditing,
+                        textColor: isEditing? Colors.black : Colors.grey,
                       ))),
               const SizedBox(height: 15),
               Consumer(
@@ -105,29 +107,29 @@ class _MyHomePageState extends State<MyHomePage> {
                         prefixIcon: Icons.lock,
                         obscureText: true,
                         hintText: 'Enter Your Password',
-                        readOnly: !isEditing.value,
-                        enabled: isEditing.value,
-                        textColor: isEditing.value ? Colors.black : Colors.grey,
+                        readOnly: !isEditing,
+                        enabled: isEditing,
+                        textColor: isEditing? Colors.black : Colors.grey,
                       ))),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  if (!isEditing.value)
+                  if (!isEditing)
                     AppButton(
                       width: MediaQuery.of(context).size.width * 0.9,
                       text: 'Edit',
                       onPressed: () async {
-                        isEditing.value = true;
+                        isEditing = true;
                         nameFocusNode.requestFocus();
                       },
                     ),
-                  if (isEditing.value)
+                  if (isEditing)
                     AppButton(
                       width: MediaQuery.of(context).size.width * 0.9,
                       text: 'Save',
                       onPressed: () async {
-                        isEditing.value = false;
+                        isEditing = false;
                         providerController.updateData();
                       },
                     ),

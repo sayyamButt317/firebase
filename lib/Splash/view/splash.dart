@@ -1,10 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:task1/Splash/Controller/splash_controller.dart';
-
-import '../Controller/splashcontroller.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({
@@ -24,7 +21,7 @@ class _MyWidgetState extends State<SplashScreen> {
     Timer(
       const Duration(seconds: 3),
       () {
-        providercontroller.checkLoginStatus();
+        providercontroller.checkLogin();
       },
     );
   }
